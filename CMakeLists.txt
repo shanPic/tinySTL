@@ -3,4 +3,4 @@ project(tinySTL)
 
 set(CMAKE_CXX_STANDARD 11)
 
-add_executable(tinySTL main.cpp)
+add_executable(tinySTL main.cpp alloc.h)
