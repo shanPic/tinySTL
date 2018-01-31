@@ -4,6 +4,6 @@ int main() {
 
     int *ptr = new int(1);
     tinystl::construct(ptr, sizeof(int));
-    tinystl::destory(ptr);
+    tinystl::destroy(ptr);
     return 0;
 }

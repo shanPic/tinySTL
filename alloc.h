@@ -48,7 +48,8 @@ namespace tinystl
             free(p);
         }
 
-        typedef void (* PTR_VOID_FUN)();
+        //typedef void (* PTR_VOID_FUN)();
+        using PTR_VOID_FUN = void(*)();
         PTR_VOID_FUN set_malloc_handler(PTR_VOID_FUN new_fuc) {
             PTR_VOID_FUN old = __malloc_alloc_oom_handler;
             __malloc_alloc_oom_handler = new_fuc;
