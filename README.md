@@ -5,7 +5,7 @@ tinySTL
 
 编译环境：windows, MinGW3.22(GCC 5.3.0,Cmake 3.9.6), Clion
 
-##进度
+## 进度
 
 * type_traits.h     100%
 * construct.h       100%
