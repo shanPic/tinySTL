@@ -14,9 +14,11 @@ namespace tinystl {
     //是POD类型
     template <typename ForwardIterator, typename Size, typename T>
     inline ForwardIterator
-    __uninitialized_fill_n_aux(ForwardIterator target, Size n,
-                               const T& value, __true_type) {
-        return fill_n(target, n, value);
+    __uninitialized_fill_n_aux(ForwardIterator target, Size n, const T& value, __true_type) {
+        for (; n > 0; n--, target++) {
+            *target = value;
+        }
+        return target;
     };
 
     //不是POD类型
@@ -54,7 +56,11 @@ namespace tinystl {
     template <typename InputIterator, typename ForwardIterator>
     inline ForwardIterator
     __uninitialized_copy_aux(InputIterator first, InputIterator last, ForwardIterator target, __true_type) {
-        return copy(first, last, target);
+
+        for(; first != last; first++, target++) {
+            *target = *first;
+        }
+        return target;
     };
 
     template <typename InputIterator, typename ForwardIterator>
@@ -104,7 +110,10 @@ namespace tinystl {
     template <typename InputIterator, typename T>
     inline void
     __uninitialized_fill_aux(InputIterator first, InputIterator last, const T &value, __true_type) {
-        fill(first, last, value);
+        //fill(first, last, value);
+        for (; first != last; first++ ) {
+            *first = value;
+        }
     };
 
     template <typename InputIterator, typename T>

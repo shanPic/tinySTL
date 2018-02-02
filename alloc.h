@@ -89,10 +89,10 @@ namespace tinystl
     class simple_alloc{
     public:
         static T *allocate(size_t n){   //分配n个T
-            return n == 0 ? 0 : (T*) Alloc::allocate(n * sizeof(T));
+            return n == 0 ? 0 : static_cast<T*>(Alloc::allocate(n * sizeof(T)));
         }
         static T *allocate(){   //分配1个T
-            return (T*) Alloc::allocate(sizeof(T));
+            return static_cast<T*>(Alloc::allocate(sizeof(T)));
         }
         static void deallocate(T *p, size_t n){ //在p销毁n个T
              n == 0 ? :Alloc::deallocate(p, n * sizeof(T));
