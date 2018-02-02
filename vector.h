@@ -76,7 +76,7 @@ namespace tinystl {
         iterator end() { return last; }
 
         //容量
-        size_type size() { static_cast<size_type>(last - first); }
+        size_type size() { return static_cast<size_type>(last - first); }
         size_type capacity() { return static_cast<size_type>(end_of_storage - first); }
         bool emopty() { return first == last; }
 
@@ -87,8 +87,8 @@ namespace tinystl {
         //修改
         void clear();
         iterator insert( iterator pos, const T& value ) { return insert_one_elem(pos,value); }
-        iterator insert( iterator pos, size_type n, const T &value); //TODO
-        iterator insert_one_elem( iterator pos, const T &value);
+        iterator insert( iterator pos, size_type n, const value_type &value);
+        iterator insert_one_elem( iterator pos, const value_type &value);
         iterator erase( iterator pos );
         iterator erase( iterator begin, iterator end);
         void push_back( const T& value );
@@ -126,9 +126,9 @@ namespace tinystl {
     };
 
     template <typename T, typename Alloc>
-    VEC_NAME::iterator vector<T,Alloc>::insert_one_elem( VEC_NAME::iterator pos, const T &value) {
+    VEC_NAME::iterator vector<T,Alloc>::insert_one_elem( VEC_NAME::iterator pos, const VEC_NAME::value_type &value) {
         if (last != end_of_storage) {
-            construct(last, last + 1);
+            construct(last, value);
             copy_backward_overlay(last, pos, last);
             last++;
             construct(pos, value);
@@ -192,7 +192,7 @@ namespace tinystl {
     };
 
     template <typename T, typename Alloc>
-    VEC_NAME::iterator vector<T,Alloc>::insert( VEC_NAME::iterator pos, size_type n, const T &value) {
+    VEC_NAME::iterator vector<T,Alloc>::insert( VEC_NAME::iterator pos, size_type n, const VEC_NAME::value_type &value) {
         size_type old_sz = size();
         size_type new_sz = old_sz + n;
 
