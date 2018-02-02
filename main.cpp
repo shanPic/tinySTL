@@ -1,9 +1,11 @@
 #include <iostream>
-#include "construct.h"
+#include "vector.h"
+using namespace tinystl;
 int main() {
 
-    int *ptr = new int(1);
-    tinystl::construct(ptr, sizeof(int));
-    tinystl::destroy(ptr);
+    vector<int> vec(3,3);
+    for(vector<int>::iterator ite = vec.begin(); ite != vec.end(); ite++) {
+        std::cout << *ite << std::endl;
+    }
     return 0;
 }

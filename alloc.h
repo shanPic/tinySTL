@@ -20,16 +20,21 @@ namespace tinystl
 
     //以下为一级配置器__malloc_alloc_template
 
+
+
     template <int inst> //!??
     class __malloc_alloc_template {
 
+        using PTR_VOID_FUN = void(*)();
     private:
         //oom:out of memory;
         //以下函数用来处理oom
         static void *oom_malloc(size_t);
         static void *oom_remalloc(void *,size_t);
         //模仿C++中的out-of-memory handler,初始为0,可以修改
-        static void (* __malloc_alloc_oom_handler)() = 0;
+        //__malloc_alloc_oom_handler
+        //static void (* __malloc_alloc_oom_handler)();
+        static PTR_VOID_FUN __malloc_alloc_oom_handler ;
     public:
 
         static void *allocate(size_t sz) {
@@ -44,12 +49,12 @@ namespace tinystl
             return res;
         }
 
-        static void *deallocte(void *p, size_t sz) {
+        static void *deallocate(void *p, size_t sz) {
             free(p);
         }
 
         //typedef void (* PTR_VOID_FUN)();
-        using PTR_VOID_FUN = void(*)();
+
         PTR_VOID_FUN set_malloc_handler(PTR_VOID_FUN new_fuc) {
             PTR_VOID_FUN old = __malloc_alloc_oom_handler;
             __malloc_alloc_oom_handler = new_fuc;
@@ -58,18 +63,25 @@ namespace tinystl
 
     };
 
-    void * __malloc_alloc_template::oom_malloc(size_t sz) {
-        void * res;
+    template <int inst>
+    void (* __malloc_alloc_template<inst>::__malloc_alloc_oom_handler)() = 0;
+
+    template <int inst>
+    void * __malloc_alloc_template<inst>::oom_malloc(size_t sz) {
+        void *res;
+        PTR_VOID_FUN my_alloc_handler;
 
         for (;;){
-            if (__malloc_alloc_oom_handler == 0) { __THROW_BAD_ALLOC}
+            my_alloc_handler = __malloc_alloc_oom_handler;
+            if ( my_alloc_handler == 0) { __THROW_BAD_ALLOC}
             (*__malloc_alloc_oom_handler)();
             res = malloc(sz);
             if (res) return res;
         }
     }
 
-    void * __malloc_alloc_template::oom_remalloc(void *p, size_t sz) {
+    template <int inst>
+    void * __malloc_alloc_template<inst>::oom_remalloc(void *p, size_t sz) {
         void * res;
 
         for (;;) {
@@ -95,7 +107,7 @@ namespace tinystl
             return static_cast<T*>(Alloc::allocate(sizeof(T)));
         }
         static void deallocate(T *p, size_t n){ //在p销毁n个T
-             n == 0 ? :Alloc::deallocate(p, n * sizeof(T));
+            if (n != 0) Alloc::deallocate(p, n * sizeof(T));
         }
         static void deallocate(T *p){
             deallocate(p, sizeof(T));

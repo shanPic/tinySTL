@@ -96,8 +96,9 @@ namespace tinystl {
 
     };
 
-    template <typename T, typename Alloc = malloc_alloc>
-    reference vector::at(size_type loc) {
+#define VEC_NAME typename vector<T,Alloc>
+    template <typename T, typename Alloc>
+    VEC_NAME::reference vector<T,Alloc>::at(VEC_NAME::size_type loc) {
         if(loc >= size()) {
             throw std::out_of_range("too big location");
         }
@@ -107,14 +108,14 @@ namespace tinystl {
         return *(first + loc);
     }
 
-    template <typename T, typename Alloc = malloc_alloc>
-    void vector::clear() {
+    template <typename T, typename Alloc>
+    void vector<T,Alloc>::clear() {
         destroy(first, last);
         first = last = nullptr;
     }
 
-    template <typename T, typename Alloc = malloc_alloc>
-    void vector::push_back(const T &value) {
+    template <typename T, typename Alloc>
+    void vector<T,Alloc>::push_back(const T &value) {
         if(last != end_of_storage) {
             construct(last, value);
             last++;
@@ -124,8 +125,8 @@ namespace tinystl {
         }
     };
 
-    template <typename T, typename Alloc = malloc_alloc>
-    iterator vector::insert_one_elem( iterator pos, const T &value) {
+    template <typename T, typename Alloc>
+    VEC_NAME::iterator vector<T,Alloc>::insert_one_elem( VEC_NAME::iterator pos, const T &value) {
         if (last != end_of_storage) {
             construct(last, last + 1);
             copy_backward_overlay(last, pos, last);
@@ -157,8 +158,8 @@ namespace tinystl {
         }
     };
 
-    template <typename T, typename Alloc = malloc_alloc>
-    iterator vector::erase(iterator pos) {
+    template <typename T, typename Alloc>
+    VEC_NAME::iterator vector<T,Alloc>::erase(VEC_NAME::iterator pos) {
         destroy(pos);
         iterator cur = pos + 1;
         if (cur != last){
@@ -172,8 +173,8 @@ namespace tinystl {
         return pos;
     }
 
-    template <typename T, typename Alloc = malloc_alloc>
-    iterator vector::erase( iterator begin, iterator end) {
+    template <typename T, typename Alloc>
+    VEC_NAME::iterator vector<T,Alloc>::erase(VEC_NAME:: iterator begin, VEC_NAME::iterator end) {
         iterator fill_cur = begin;
         iterator copy_cur = begin;
 
@@ -190,8 +191,8 @@ namespace tinystl {
         return begin;
     };
 
-    template <typename T, typename Alloc = malloc_alloc>
-    iterator vector::insert( iterator pos, size_type n, const T &value) {
+    template <typename T, typename Alloc>
+    VEC_NAME::iterator vector<T,Alloc>::insert( VEC_NAME::iterator pos, size_type n, const T &value) {
         size_type old_sz = size();
         size_type new_sz = old_sz + n;
 

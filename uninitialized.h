@@ -6,6 +6,7 @@
 #define TINYSTL_UNINITIALIZED_H
 
 #include "construct.h"
+#include "type_traits.h"
 #include <cstring>
 
 namespace tinystl {
@@ -79,7 +80,7 @@ namespace tinystl {
     template <typename InputIterator, typename ForwardIterator, typename T>
     inline ForwardIterator
     __uninitialized_copy(InputIterator first, InputIterator last, ForwardIterator target, T*) {
-        using isPOD = __type_traits<T>::is_POD_type;
+        using isPOD = typename __type_traits<T>::is_POD_type;
         return __uninitialized_copy_aux(first, last, target, isPOD());
     };
 
@@ -133,7 +134,7 @@ namespace tinystl {
     template <typename InputIterator, typename T>
     inline void
     __uninitialized_fill(InputIterator first, InputIterator last, const T &value, T*) {
-        using isPOD = __type_traits<T>::is_POD_type ;
+        using isPOD = typename __type_traits<T>::is_POD_type ;
         __uninitialized_fill_aux(first, last, value, isPOD());
     };
 
