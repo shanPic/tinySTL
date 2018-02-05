@@ -98,7 +98,7 @@ namespace tinystl {
 
 #define VEC_NAME typename vector<T,Alloc>
     template <typename T, typename Alloc>
-    VEC_NAME::reference vector<T,Alloc>::at(VEC_NAME::size_type loc) {
+    VEC_NAME::reference vector<T,Alloc>::at(size_type loc) {
         if(loc >= size()) {
             throw std::out_of_range("too big location");
         }
@@ -126,7 +126,7 @@ namespace tinystl {
     };
 
     template <typename T, typename Alloc>
-    VEC_NAME::iterator vector<T,Alloc>::insert_one_elem( VEC_NAME::iterator pos, const VEC_NAME::value_type &value) {
+    VEC_NAME::iterator vector<T,Alloc>::insert_one_elem( iterator pos, const value_type &value) {
         if (last != end_of_storage) {
             construct(last, value);
             copy_backward_overlay(last, pos, last);
@@ -159,7 +159,7 @@ namespace tinystl {
     };
 
     template <typename T, typename Alloc>
-    VEC_NAME::iterator vector<T,Alloc>::erase(VEC_NAME::iterator pos) {
+    VEC_NAME::iterator vector<T,Alloc>::erase(iterator pos) {
         destroy(pos);
         iterator cur = pos + 1;
         if (cur != last){
@@ -174,7 +174,7 @@ namespace tinystl {
     }
 
     template <typename T, typename Alloc>
-    VEC_NAME::iterator vector<T,Alloc>::erase(VEC_NAME:: iterator begin, VEC_NAME::iterator end) {
+    VEC_NAME::iterator vector<T,Alloc>::erase( iterator begin, iterator end) {
         iterator fill_cur = begin;
         iterator copy_cur = begin;
 
@@ -192,7 +192,7 @@ namespace tinystl {
     };
 
     template <typename T, typename Alloc>
-    VEC_NAME::iterator vector<T,Alloc>::insert( VEC_NAME::iterator pos, size_type n, const VEC_NAME::value_type &value) {
+    VEC_NAME::iterator vector<T,Alloc>::insert( iterator pos, size_type n, const value_type &value) {
         size_type old_sz = size();
         size_type new_sz = old_sz + n;
 
@@ -219,7 +219,7 @@ namespace tinystl {
             }
 
             iterator new_first = allocator::allocate(new_cap);
-            iterator fill_cur_1 = uninitialized_copy(first, pos - 1, new_first);
+            iterator fill_cur_1 = uninitialized_copy(first, pos, new_first);
             iterator fill_cur_2 = uninitialized_fill_n(fill_cur_1, n, value);
             last = uninitialized_copy(pos, last, fill_cur_2);
 
