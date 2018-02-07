@@ -1,18 +1,15 @@
 #include <iostream>
 #include "vector.h"
+#include "deque.h"
 using namespace tinystl;
 int main() {
-
-    vector<int> vec(1,4);
-    //vec.push_back(4);
-    vector<int>::iterator ite = vec.begin();
-    //std::cout << vec.size() << std::endl;
-    //vec.erase(vec.begin(),vec.begin()+2);
-    vec.insert(ite,5);
-     ite = vec.begin();
-    vec.insert(ite,2,3);
-    for(vector<int>::iterator ite = vec.begin(); ite != vec.end(); ite++) {
-        std::cout << *ite << std::endl;
+    int cnt = 0, value = 1;
+    deque<int> test;
+    test.push_back(3);
+    test.push_back(4);
+    cnt+=2;
+    for( int i = 0; i < cnt; i++) {
+        std::cout << test[i] << std::endl;
     }
     return 0;
 }
