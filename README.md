@@ -13,3 +13,8 @@ tinySTL
 * iterator.h
 * unintialized.h
 * vector.h
+* deque.h
+* pair.h
+* RB_tree.h
+* 部分function.h
+* map.h

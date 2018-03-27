@@ -109,7 +109,7 @@ namespace tinystl
         static void deallocate(T *p, size_t n){ //在p销毁n个T
             if (n != 0) Alloc::deallocate(p, n * sizeof(T));
         }
-        static void deallocate(T *p){
+        static void deallocate(T *p){   //在p销毁1个T
             deallocate(p, sizeof(T));
         }
     };
