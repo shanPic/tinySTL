@@ -92,7 +92,7 @@ namespace tinystl{
 
 
 
-//        sizeType erase(const keyType& x) { return t.erase(x); }//todo
+//        size_type erase(const keyType& x) { return t.erase(x); }//todo
 
 
         void clear() { t.clear(); }
