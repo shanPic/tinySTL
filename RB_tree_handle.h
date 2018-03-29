@@ -115,23 +115,23 @@ namespace tinystl{
 //        _rb_tree_node_base* y = z;
 //        _rb_tree_node_base* x = 0;
 //        _rb_tree_node_base* x_parent = nullptr;
-//        if (y->left == 0)     // z has at most one non-null child. y == z.
-//            x = y->right;     // x might be null.
-//        else if (y->right == nullptr)  // z has exactly one non-null child. y == z.
-//            x = y->left;    // x is not null.
-//        else {                   // z has two non-null children.  Set y to
-//            y = y->right;   //   z's successor.  x might be null.
+//        if (y->left == 0)
+//            x = y->right;
+//        else if (y->right == nullptr)
+//            x = y->left;
+//        else {
+//            y = y->right;
 //            while (y->left != nullptr)
 //                y = y->left;
 //            x = y->right;
 //        }
-//        if (y != z) {          // relink y in place of z.  y is z's successor
+//        if (y != z) {
 //            z->left->parent = y;
 //            y->left = z->left;
 //            if (y != z->right) {
 //                x_parent = y->parent;
 //                if (x) x->parent = y->parent;
-//                y->parent->left = x;      // y must be a child of left
+//                y->parent->left = x;
 //                y->right = z->right;
 //                z->right->parent = y;
 //            }
@@ -144,12 +144,12 @@ namespace tinystl{
 //            else
 //                z->parent->right = y;
 //            y->parent = z->parent;
-//            //__STD::swap(y->color, z->color);
+//
 //            __rb_tree_color_type tmp = y->color;
 //            y->color = z->color;
 //            z->color = tmp;
 //            y = z;
-//            // y now points to node to be actually deleted
+//
 //        }
 //        else {                        // y == z
 //            x_parent = y->parent;
@@ -162,16 +162,16 @@ namespace tinystl{
 //            else
 //                z->parent->right = x;
 //            if (__leftmost == z)
-//                if (z->right == 0)        // z->left must be null also
+//                if (z->right == 0)
 //                    __leftmost = z->parent;
 //                    // makes __leftmost == _M_header if z == __root
 //                else
 //                    __leftmost = _rb_tree_node_base::minimum(x);
 //            if (__rightmost == z)
-//                if (z->left == 0)         // z->right must be null also
+//                if (z->left == 0)
 //                    __rightmost = z->parent;
-//                    // makes __rightmost == _M_header if z == __root
-//                else                      // x == z->left
+//
+//                else
 //                    __rightmost = _rb_tree_node_base::maximum(x);
 //        }
 //        if (y->color != __rb_tree_red) {
@@ -205,7 +205,7 @@ namespace tinystl{
 //                        _rb_tree_rotate_left(x_parent, __root);
 //                        break;
 //                    }
-//                } else {                  // same as above, with right <-> left.
+//                } else {
 //                    _rb_tree_node_base* w = x_parent->left;
 //                    if (w->color == __rb_tree_red) {
 //                        w->color = __rb_tree_black;
