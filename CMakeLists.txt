@@ -1,6 +1,25 @@
 cmake_minimum_required(VERSION 3.9)
 project(tinySTL)
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
 
-add_executable(tinySTL main.cpp alloc.h construct.h type_traits.h iterator.h uninitialized.h vector.h deque.h RB_tree.h list.h RB_tree_handle.h RB_tree_dataClass.h pair.h function.h TEST/rb_tree_test.cpp map.h)
+set(WORK_SPACE ${CMAKE_CURRENT_SOURCE_DIR})
+
+# sources code
+set(
+    TINY_STL_SOURCES
+)
+
+# target
+add_executable(
+    tinySTL
+    ${TINY_STL_SOURCES}
+    main.cpp
+)
+
+# include
+target_include_directories(
+    tinySTL
+    PRIVATE
+    ${WORK_SPACE}
+)

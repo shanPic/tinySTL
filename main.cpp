@@ -14,8 +14,8 @@
 //    }
 //    return 0;
 //}
-#include "D:\CodeAndProject\Cpp\tinySTL\RB_tree.h"
-#include "D:\CodeAndProject\Cpp\tinySTL\function.h"
+#include "RB_tree.h"
+#include "function.h"
 #include <iostream>
 using namespace tinystl;
 
