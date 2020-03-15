@@ -5,21 +5,69 @@ set(CMAKE_CXX_STANDARD 17)
 
 set(WORK_SPACE ${CMAKE_CURRENT_SOURCE_DIR})
 
-# sources code
-set(
-    TINY_STL_SOURCES
+########################// google test //########################
+
+# Download and unpack googletest at configure time
+configure_file(CMake-gtest-download.txt googletest-download/CMakeLists.txt)
+
+execute_process(
+    COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" .
+    RESULT_VARIABLE result
+    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/googletest-download
+)
+if(result)
+    message(FATAL_ERROR "CMake step for googletest failed: ${result}")
+endif()
+
+execute_process(
+    COMMAND ${CMAKE_COMMAND} --build .
+    RESULT_VARIABLE result
+    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/googletest-download
+)
+if(result)
+    message(FATAL_ERROR "Build step for googletest failed: ${result}")
+endif()
+
+# Prevent overriding the parent project's compiler/linker
+# settings on Windows
+set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+
+# Add googletest directly to our build. This defines
+# the gtest and gtest_main targets.
+add_subdirectory(
+    ${CMAKE_CURRENT_BINARY_DIR}/googletest-src
+    ${CMAKE_CURRENT_BINARY_DIR}/googletest-build
+    EXCLUDE_FROM_ALL
 )
 
-# target
-add_executable(
-    tinySTL
-    ${TINY_STL_SOURCES}
-    main.cpp
-)
 
-# include
-target_include_directories(
-    tinySTL
-    PRIVATE
+# Now simply link against gtest or gtest_main as needed. Eg
+#add_executable(example example.cpp)
+#target_link_libraries(example gtest_main)
+#add_test(NAME example_test COMMAND example)
+
+
+
+########################// project target //########################
+include_directories(
     ${WORK_SPACE}
+    ${gtest_SOURCE_DIR}/include
 )
+
+# map-test target
+add_executable(
+    map-test
+    ${WORK_SPACE}/test/map-test.cpp
+)
+MESSAGE("====test====" ${WORK_SPACE})
+
+
+target_link_libraries(
+    map-test
+    gtest_main
+)
+
+#add_test(
+#    NAME test
+#    COMMAND map-test
+#)
