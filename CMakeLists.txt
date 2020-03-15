@@ -59,15 +59,22 @@ add_executable(
     map-test
     ${WORK_SPACE}/test/map-test.cpp
 )
-MESSAGE("====test====" ${WORK_SPACE})
-
 
 target_link_libraries(
     map-test
     gtest_main
 )
 
-#add_test(
-#    NAME test
-#    COMMAND map-test
-#)
+# vector-test target
+add_executable(
+    vector-test
+    ${WORK_SPACE}/test/vector-test.cpp
+)
+target_link_libraries(
+    map-test
+    gtest_main
+)
+
+
+
+

@@ -6,14 +6,16 @@
 #include "function.h"
 #include <iostream>
 #include "gtest/gtest.h"
+#include <map>
 using namespace tinystl;
 
-TEST(map-test-case-1, map-test) {
-    EXPECT_EQ(1, 1);
+bool less_fun(int a, int b) {
+    return a < b;
 }
 
-void fun_rb_tree_test(){
-    rb_tree<int,int,identity<int>,std::less<int> > itree;
+TEST(MapTestCase1, MapTest) {
+    EXPECT_EQ(1, 1);
+    rb_tree<int,int,identity<int>, std::less<int>> itree;
     itree.insert_unique(1);
     itree.insert_unique(2);
     itree.insert_unique(2);
@@ -23,6 +25,8 @@ void fun_rb_tree_test(){
 
     for(;ite != itree.end(); ++ite){
         std::cout << *ite << std::endl;
+
     }
+    EXPECT_EQ(*ite, 1);
     std::cout << *itree.find(2) << std::endl;
 }
